@@ -1,0 +1,411 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca virtual Ricardo Flores Magón</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .reader-text {
+            font-family: 'Noto Serif', serif;
+            line-height: 1.8;
+            font-size: 1.125rem;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .reader-open {
+            overflow: hidden;
+        }
+
+        .paper-texture {
+            background-color: #fcfaf2;
+            background-image: radial-gradient(#e5e7eb 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-effect border-b border-green-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('inicio')">
+                    <i class="fas fa-book-reader text-emerald-600 text-3xl"></i>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-bold tracking-tight text-emerald-800 leading-none">Biblioteca virtual</span>
+                        <span class="text-sm font-semibold text-emerald-600">Ricardo Flores Magón</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex space-x-6 items-center">
+                    <button onclick="showSection('inicio')" class="font-medium hover:text-emerald-600 transition text-emerald-900">Inicio</button>
+                    <button onclick="showSection('categorias')" class="font-medium hover:text-emerald-600 transition text-emerald-900">Categorías</button>
+                    <button onclick="showSection('libros')" class="font-medium hover:text-emerald-600 transition text-emerald-900">Libros</button>
+                    <button onclick="showSection('subir')" class="font-medium hover:text-emerald-600 transition text-emerald-900">Subir libro</button>
+                    <button onclick="showSection('acerca')" class="font-medium hover:text-emerald-600 transition text-emerald-900">Nosotros</button>
+                    <div class="border-l border-green-100 pl-6">
+                        <button onclick="showSection('perfil')" class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-200 hover:bg-emerald-100 transition">
+                            <i class="fas fa-user"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-emerald-600 p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-green-100 px-4 py-6 space-y-4 shadow-xl">
+            <button onclick="showSection('inicio')" class="block w-full text-left py-2 font-semibold">Inicio</button>
+            <button onclick="showSection('categorias')" class="block w-full text-left py-2 font-semibold">Categorías</button>
+            <button onclick="showSection('libros')" class="block w-full text-left py-2 font-semibold">Libros</button>
+            <button onclick="showSection('subir')" class="block w-full text-left py-2 font-semibold">Subir libro</button>
+            <button onclick="showSection('perfil')" class="block w-full text-left py-2 font-semibold">Mi perfil</button>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="pt-28 pb-12">
+
+        <!-- SECCIÓN: INICIO -->
+        <section id="inicio" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12 py-16">
+                <div class="md:w-1/2 space-y-8">
+                    <div class="inline-block px-4 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm font-bold tracking-wide uppercase">
+                        Cultura y libertad
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold text-gray-900 leading-tight">
+                        Explora el saber en la <span class="text-emerald-600">Ricardo Flores Magón</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed">
+                        Repositorio digital de acceso libre. Encuentra tus obras favoritas y descarga los archivos directamente a tu dispositivo.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="showSection('libros')" class="bg-emerald-600 text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-emerald-700 shadow-xl shadow-emerald-100 transition-all hover:-translate-y-1">Ver catálogo</button>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=1000" alt="Libros en estante" class="rounded-[3rem] shadow-2xl border-8 border-white">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: CATEGORÍAS -->
+        <section id="categorias" class="hidden-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+            <h2 class="text-4xl font-bold mb-12 text-emerald-900">Categorías</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div onclick="filterByCategory('matematicas')" class="cursor-pointer group p-10 bg-white rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 hover:shadow-xl transition-all">
+                    <i class="fas fa-atom text-3xl text-emerald-600 mb-4 group-hover:scale-110 transition"></i>
+                    <h3 class="text-xl font-bold">Ciencia</h3>
+                </div>
+                <div onclick="filterByCategory('Educación')" class="cursor-pointer group p-10 bg-white rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 hover:shadow-xl transition-all">
+                    <i class="fas fa-graduation-cap text-3xl text-emerald-600 mb-4 group-hover:scale-110 transition"></i>
+                    <h3 class="text-xl font-bold">Educación</h3>
+                </div>
+                <div onclick="filterByCategory('Superación')" class="cursor-pointer group p-10 bg-white rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 hover:shadow-xl transition-all">
+                    <i class="fas fa-seedling text-3xl text-emerald-600 mb-4 group-hover:scale-110 transition"></i>
+                    <h3 class="text-xl font-bold">Superación</h3>
+                </div>
+                <div onclick="filterByCategory('computacion')" class="cursor-pointer group p-10 bg-white rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 hover:shadow-xl transition-all">
+                    <i class="fas fa-briefcase text-3xl text-emerald-600 mb-4 group-hover:scale-110 transition"></i>
+                    <h3 class="text-xl font-bold">Negocios</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: LIBROS -->
+        <section id="libros" class="hidden-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-emerald-900">Catálogo de libros</h2>
+                    <p id="active-filter-text" class="text-emerald-600 font-medium mt-2">Haz clic en descargar para obtener el archivo</p>
+                </div>
+                <div class="relative w-full md:w-80">
+                    <input type="text" id="search-input" onkeyup="searchBooks()" placeholder="Título o autor..." class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400"></i>
+                </div>
+            </div>
+
+            <div id="books-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Libros cargados dinámicamente -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN: SUBIR LIBRO -->
+        <section id="subir" class="hidden-section max-w-4xl mx-auto px-4 py-16">
+            <div class="bg-white p-10 rounded-[3rem] shadow-2xl border border-emerald-50">
+                <h2 class="text-4xl font-bold text-emerald-900 mb-4 text-center">Subir libro</h2>
+                <p class="text-gray-500 mb-10 text-center">Añade una nueva obra. Los cambios son temporales en esta versión sin base de datos.</p>
+
+                <form id="upload-form" onsubmit="handleLocalUpload(event)" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-emerald-900 mb-2 uppercase">Título</label>
+                            <input type="text" id="up-title" required placeholder="Ej: Aprendizaje y memoria" class="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-emerald-900 mb-2 uppercase">Autor</label>
+                            <input type="text" id="up-author" required placeholder="Nombre del autor" class="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-emerald-900 mb-2 uppercase">Categoría</label>
+                            <select id="up-category" class="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                                <option value="Ciencia">Ciencia</option>
+                                <option value="Educación">Educación</option>
+                                <option value="Superación">Superación</option>
+                                <option value="Negocios">Negocios</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-emerald-900 mb-2 uppercase">Enlace del archivo (Ruta local o URL)</label>
+                            <input type="text" id="up-url" required placeholder="libro/mi_archivo.pdf" class="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-emerald-900 mb-2 uppercase">Resumen breve</label>
+                        <textarea id="up-content" rows="4" required placeholder="Fragmento o descripción..." class="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-emerald-700 transition shadow-xl shadow-emerald-100 uppercase tracking-widest flex items-center justify-center gap-3">
+                        <i class="fas fa-plus"></i> Añadir a la lista
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: PERFIL -->
+        <section id="perfil" class="hidden-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 class="text-4xl font-bold text-emerald-900 mb-12">Mi biblioteca personal</h2>
+            <div class="bg-emerald-50 p-12 rounded-[3rem] text-center">
+                <div class="w-24 h-24 bg-emerald-600 text-white rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-xl font-bold">R</div>
+                <h3 class="text-2xl font-bold text-emerald-900">Usuario invitado</h3>
+                <p class="text-emerald-600 mb-8 font-medium">Lector magonista</p>
+                <p class="text-gray-500 max-w-md mx-auto">En esta versión simplificada, tus favoritos e historial se mantienen solo mientras la pestaña esté abierta.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: ACERCA DE -->
+        <section id="acerca" class="hidden-section max-w-5xl mx-auto px-4 py-16 text-center">
+            <h2 class="text-4xl font-bold text-emerald-900 mb-8">Nuestra misión</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto italic">"Sólo la educación nos hará libres."</p>
+            <p class="text-gray-500 mt-6 max-w-2xl mx-auto leading-relaxed">
+                Honramos la memoria de Ricardo Flores Magón ofreciendo una plataforma para el aprendizaje continuo.
+                Creemos en el acceso democrático a los libros y en el poder transformador de la palabra escrita.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- LECTOR MODAL -->
+    <div id="book-reader" class="fixed inset-0 z-[100] hidden bg-gray-900/95 flex flex-col">
+        <div class="h-16 bg-emerald-900 flex justify-between items-center px-6 text-white">
+            <div class="flex items-center gap-4">
+                <i class="fas fa-book-open"></i>
+                <span id="reader-title" class="font-bold truncate text-sm">Vista previa</span>
+            </div>
+            <button onclick="closeReader()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto paper-texture p-6 md:p-12">
+            <div class="max-w-3xl mx-auto bg-white shadow-2xl p-8 md:p-16 rounded-lg border border-gray-100">
+                <div id="reader-content" class="reader-text text-gray-800">
+                    <!-- Contenido dinámico -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 translate-y-32 opacity-0 transition-all duration-500 z-[110] bg-emerald-900 text-white px-8 py-4 rounded-2xl shadow-2xl font-bold">
+        Acción realizada
+    </div>
+
+    <script>
+        // DATOS LOCALES - REEMPLAZA LOS '#' CON TUS RUTAS DE ARCHIVOS
+        // Para referenciar archivos en la carpeta 'libro', usa: libro/archivo.ext
+        let books = [
+            {
+                id: 'relatividad',
+                title: 'Sobre la teoría de la relatividad',
+                author: 'Albert Einstein',
+                category: 'Ciencia',
+                img: 'libro/04.png', // Ejemplo de referencia a carpeta local
+                content: 'Obra fundamental de la física moderna sobre el espacio-tiempo.',
+                url: 'libro/04.pdf' // Ejemplo de referencia a carpeta local
+            },
+            { id: 'ciencia', title: 'Tecnico PC', author: 'Mark A. Gluck', category: 'Educación', img: 'libro/01.png', content: 'Libro para aprender a armar una computadora.', url: 'libro/01.pdf' },
+            { id: 'Ingles', title: 'Ingles sin barreras #1', author: 'Umberto Eco', category: 'Educación', img: 'Libro/01Ingles.png', content: 'Libro basico de ingles', url: 'Libro/01Ingles.pdf' },
+            { id: 'ingles02', title: 'Ingles sin barreras #2', author: 'El Video-Maestro de Inglés', category: 'Educacion', img: 'libro/02ingles.png', content: 'Libro basico de ingles02', url: 'libro/02ingles.pdf' },
+            { id: 'fracaso', title: 'El lado positivo del fracaso', author: 'John C. Maxwell', category: 'Superación', img: 'libro/03.png', content: 'Cómo transformar errores en peldaños al éxito.', url: 'libro/03.pdf' },
+            { id: 'exito', title: 'aljebra', author: 'John C. Maxwell', category: 'matematicas', img: 'libro/05.png', content: 'libro para aprender algebra.', url: 'libro/05.pdf' },
+            { id: 'entrenamiento', title: 'matematicas simplificadas', author: 'Alberto Coto', category: 'matematicas', img: 'libro/06.png', content: 'metematicas simlificadas.', url: 'libro/06.pdf' },
+            { id: 'tiempo', title: 'metodos numericos aplicados con sofware', author: 'shoichiro nakaruma ', category: 'computacion', img: 'libro/07.png', content: '.', url: 'libro/07.pdf' },
+            { id: 'meta', title: 'fundamentos ed electromagnetismo para ingieneria', author: 'Eliyahu M. Goldratt', category: 'computacion', img: 'libro/08.png', content: 'libro para aprender ingieneria.', url: 'libro/08.pdf' },
+            { id: 'steve', title: 'computacion', author: 'Walter Isaacson', category: 'computacion', img: 'libro/09.png', content: 'libro para aprender a programar.', url: 'libro/09.pdf' }
+        ];
+
+        function renderBooks(list = books) {
+            const container = document.getElementById('books-container');
+            container.innerHTML = '';
+
+            list.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'book-card bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex flex-col h-full group';
+                card.innerHTML = `
+                        <div class="relative overflow-hidden rounded-2xl mb-6 h-56 cursor-pointer" onclick="openBook('${book.id}')">
+                            <img src="${book.img || 'https://images.unsplash.com/photo-1543004218-ee141104975e?auto=format&fit=crop&w=400'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <div class="absolute inset-0 bg-emerald-900/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all">
+                                <span class="text-white font-black text-xs uppercase px-6 py-2 bg-emerald-600 rounded-full shadow-lg">Leer resumen</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">${book.category}</span>
+                                </div>
+                                <h3 class="font-bold text-xl text-emerald-900 leading-tight mb-1">${book.title}</h3>
+                                <p class="text-gray-400 font-medium text-sm mb-6 italic">por ${book.author}</p>
+
+                                <div class="flex gap-2">
+                                    <button onclick="openBook('${book.id}')" class="flex-1 bg-emerald-50 text-emerald-700 py-3 rounded-xl font-bold text-xs hover:bg-emerald-100 transition flex items-center justify-center gap-2">
+                                        <i class="fas fa-eye"></i> Leer
+                                    </button>
+                                    <a href="${book.url}" target="_blank" class="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs hover:bg-emerald-700 transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-100">
+                                        <i class="fas fa-file-download"></i> Descargar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleLocalUpload(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('up-title').value.trim();
+            const author = document.getElementById('up-author').value.trim();
+            const category = document.getElementById('up-category').value;
+            const url = document.getElementById('up-url').value.trim();
+            const content = document.getElementById('up-content').value.trim();
+
+            // Formatear título: Solo mayúscula inicial
+            const formattedTitle = titleInput.charAt(0).toUpperCase() + titleInput.slice(1).toLowerCase();
+
+            const newBook = {
+                id: Date.now().toString(),
+                title: formattedTitle,
+                author,
+                category,
+                content,
+                url,
+                img: 'https://images.unsplash.com/photo-1543004218-ee141104975e?auto=format&fit=crop&w=400'
+            };
+
+            books.push(newBook);
+            showToast("Libro añadido localmente");
+            e.target.reset();
+            renderBooks();
+            showSection('libros');
+        }
+
+        function openBook(id) {
+            const b = books.find(x => x.id === id);
+            if (!b) return;
+
+            document.getElementById('reader-title').innerText = b.title;
+            document.getElementById('reader-content').innerHTML = `
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold mb-1">${b.title}</h1>
+                        <p class="text-emerald-600 font-bold uppercase tracking-widest text-xs">${b.author}</p>
+                    </div>
+                    <div class="reader-text text-gray-700 leading-loose">
+                        <p>${b.content}</p>
+                        <div class="mt-10 p-6 bg-emerald-50 rounded-2xl text-center border border-emerald-100">
+                            <p class="font-bold text-emerald-800 mb-4">¿Descargar el archivo completo?</p>
+                            <a href="${b.url}" target="_blank" class="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition inline-flex items-center gap-2 mx-auto">
+                                <i class="fas fa-download"></i> Obtener archivo físico
+                            </a>
+                        </div>
+                    </div>
+                `;
+            document.getElementById('book-reader').classList.remove('hidden');
+            document.body.classList.add('reader-open');
+        }
+
+        function closeReader() {
+            document.getElementById('book-reader').classList.add('hidden');
+            document.body.classList.remove('reader-open');
+        }
+
+        function showSection(id) {
+            ['inicio', 'categorias', 'libros', 'subir', 'perfil', 'acerca'].forEach(s => {
+                const el = document.getElementById(s);
+                if (el) el.classList.add('hidden-section');
+            });
+            const target = document.getElementById(id);
+            if (target) target.classList.remove('hidden-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function filterByCategory(cat) {
+            document.getElementById('active-filter-text').innerText = `Mostrando: ${cat}`;
+            const filtered = books.filter(b => b.category === cat);
+            renderBooks(filtered);
+            showSection('libros');
+        }
+
+        function searchBooks() {
+            const q = document.getElementById('search-input').value.toLowerCase();
+            const filtered = books.filter(b => b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q));
+            renderBooks(filtered);
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-32', 'opacity-0'), 3000);
+        }
+
+        // Carga inicial
+        window.onload = () => renderBooks();
+    </script>
+</body>
+</html>
